@@ -1,3 +1,9 @@
 sample1
 =======
-test 1`23
+Pre-Requiest
+
+
+How To Deploy
+
+
+How To Run.
