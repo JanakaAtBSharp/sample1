@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Demo MVC" default="copy">
+<property name="catalina.home" value="C:\Program Files\Apache Software Foundation\Tomcat 6.0" />
+	<path id="compile.classpath">
+		<fileset dir="libs">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	
+	<target name="init">
+		<mkdir dir="build/classes"/>
+		<mkdir dir="dist"/>
+	</target>
+	
+	<target name="compile" depends="init">
+		<javac destdir="build/classes" debug="true" srcdir="src">
+			<classpath refid="compile.classpath"/>
+		</javac>
+		<copy file="config/log4j.properties" todir="build/classes" />
+	</target>
+	
+	<target name="war" depends="compile">
+		<war destfile="dist/DemoMVC.war" webxml="WebContent/WEB-INF/web.xml">
+			<fileset dir="WebContent"/>
+			<lib dir="libs"/>
+			<classes dir="build/classes"/>
+		</war>
+		<delete dir="${catalina.home}/webapps/DemoMVC"/>
+	</target>
+	
+	<target name="clean">
+		<delete dir="dist"/>
+		<delete dir="build/classes"/>
+	</target>
+	
+	<target name="copy" depends="war">
+		<copy todir="${catalina.home}/webapps" overwrite="true">
+			<fileset dir="dist" includes="**/*.war"/>
+		</copy>		
+	</target>
+</project>
